@@ -140,7 +140,7 @@ small{color:var(--mu)}
 <body>
 <div class="bgfx"><i></i><i></i><i></i></div>
 <div id="lg"><div class="gl box"><div class="zl"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="98" height="98" rx="26" fill="#07142e" stroke="#fff" stroke-opacity=".22" stroke-width="2"/><path d="M31 33H71L31 67H71V81L60 67" transform="translate(4 4)" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 33H71L31 67H71V81L60 67" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="76" cy="24" r="4.5" fill="#38bdf8"/></svg></div><h1 class="brand" style="font-size:34px">Zync</h1><p style="color:var(--mu)">পড়াশোনা আর বন্ধুত্ব, এক জায়গায়</p>
-<button class="gbtn" id="gl"><svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.800 2.400 30.300 0 24 0 14.600 0 6.500 5.400 2.600 13.200l7.900 6.100C12.400 13.600 17.700 9.500 24 9.500z"/><path fill="#4285F4" d="M46.500 24.500c0-1.600-.1-3.100-.4-4.500H24v9h12.700c-.6 3-2.300 5.500-4.800 7.200l7.600 5.900c4.500-4.100 7-10.200 7-17.600z"/><path fill="#FBBC05" d="M10.500 28.700A14.500 14.500 0 019.500 24c0-1.600.3-3.200.8-4.700l-7.900-6.100A24 24 0 000 24c0 3.900.9 7.500 2.600 10.800z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.600-5.900c-2.100 1.400-4.900 2.300-8.300 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>Google দিয়ে লগইন করুন</button><small id="le" style="color:#ff5470"></small></div></div>
+<button class="gbtn" id="gl"><svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.800 2.400 30.300 0 24 0 14.600 0 6.500 5.400 2.600 13.200l7.900 6.100C12.400 13.600 17.700 9.500 24 9.500z"/><path fill="#4285F4" d="M46.500 24.500c0-1.600-.1-3.100-.4-4.500H24v9h12.700c-.6 3-2.300 5.500-4.800 7.200l7.600 5.900c4.500-4.100 7-10.200 7-17.600z"/><path fill="#FBBC05" d="M10.500 28.700A14.500 14.500 0 019.500 24c0-1.600.3-3.200.8-4.700l-7.900-6.100A24 24 0 000 24c0 3.900.9 7.500 2.600 10.800z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.600-5.900c-2.100 1.400-4.900 2.300-8.300 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>Google দিয়ে লগইন করুন</button><div class="chips"><span class="chip" data-keep data-l="bn" onclick="setLang('bn')">বাংলা</span><span class="chip" data-keep data-l="en" onclick="setLang('en')">English</span></div><small id="le" style="color:#ff5470"></small></div></div>
 <div id="root"><div class="view" id="v"></div><nav class="nav" id="nav"></nav></div>
 
 <script>
@@ -222,6 +222,7 @@ function vCalls(){return `<div class="top"><h1 class="brand">কল</h1></div>`+
 function vMe(){const m=S.me;return `<div style="text-align:center;padding:10px 0 18px"><div style="position:relative;display:inline-block">${av(m.name,0,104,m.photo)}<label class="ib" style="position:absolute;right:-4px;bottom:-4px;width:38px;height:38px;border-radius:50%;background:var(--a);color:#fff;border:0">${ic('cam',18)}<input type="file" accept="image/*" id="ph" hidden></label></div>
  <h2 style="margin-top:10px">${esc(m.name)}</h2><small>${esc(m.role)} · ${esc(m.bio)}</small></div>
  <div class="gl card"><input class="in" id="nm" value="${esc(m.name)}" placeholder="নাম"><input class="in" id="bi" value="${esc(m.bio)}" placeholder="বায়ো (শ্রেণি, স্কুল)" style="margin-top:8px"><button class="bn s" id="sv" style="margin-top:10px">সেভ করুন</button></div>
+ <div class="gl card row"><b style="flex:1">ভাষা / Language</b><span class="chip" data-keep data-l="bn" onclick="setLang('bn')">বাংলা</span><span class="chip" data-keep data-l="en" onclick="setLang('en')">English</span></div>
  <div class="gl card"><div class="row"><span style="color:var(--b)">${ic('eye')}</span><div style="flex:1"><b>অভিভাবক মোড</b><small>অভিভাবক চ্যাটের তালিকা দেখতে পারবেন</small></div>${tg(m.parent,'tp')}</div>
  <div class="row" style="margin-top:14px"><span style="color:var(--c)">${ic('moon')}</span><div style="flex:1"><b>পড়ার সময় শান্ত মোড</b><small>নোটিফিকেশন বন্ধ</small></div>${tg(m.quiet,'tq')}</div></div>
  ${window.IS_ADMIN?`<div class="gl card row" onclick="adminLogin()" style="cursor:pointer"><span style="color:var(--ok)">${ic('shield')}</span><div style="flex:1"><b>অ্যাডমিন প্যানেল</b><small>সদস্য ও অ্যাপ নিয়ন্ত্রণ</small></div>${ic('back',18).replace('<svg','<svg style="transform:rotate(180deg)"')}</div>`:""}<button class="bn r" style="width:100%;margin-bottom:12px" onclick="doLogout()">লগআউট</button>
@@ -286,6 +287,47 @@ function admin(){
  $("#am").onclick=()=>{const n=prompt("সদস্যের নাম");if(n){MEM.push({n,c:"নতুন",on:0,v:0,ban:0});d()}}};d();
 }
 render();
+</script>
+<script>
+(function(){
+const D={"চ্যাট":"Chats","ক্লাস":"Class","স্টাডি":"Study","কল":"Calls","আমি":"Me","আপনি":"You","আজ":"Today","নাম":"Name","বন্ধু":"Friend","নোটিশ":"Notice","রুটিন":"Routine","সদস্য":"Member","ছাত্র":"Student","ব্যান":"Banned","সাধারণ":"General","শীঘ্রই":"Soon","শনি":"Sat","রবি":"Sun","সোম":"Mon","মঙ্গল":"Tue","বুধ":"Wed","পার্ক":"Park","জাদুঘর":"Museum","নদীর ধার":"Riverside","গণিত":"Math","ইংরেজি":"English","বিজ্ঞান":"Science","অ্যাডমিন":"Admin","হোমওয়ার্ক":"Homework","স্টাডি রুম":"Study Room","কল":"Calls",
+"ভাষা / Language":"Language","পড়াশোনা আর বন্ধুত্ব, এক জায়গায়":"Study and friendship, in one place","Google দিয়ে লগইন করুন":"Sign in with Google","লগইন হয়নি: ":"Sign-in failed: ","এই অ্যাকাউন্ট ব্যান করা হয়েছে":"This account has been banned","প্রোফাইল পড়া যায়নি (":"Could not read profile (","Firestore Rules সেট করুন (":"Set up Firestore Rules (",
+"প্রোফাইল তৈরি করুন":"Create your profile","বন্ধুরা ইউজারনেম দিয়ে আপনাকে খুঁজবে (a-z, 0-9, _ · ৩-২০ অক্ষর)":"Friends will find you by username (a-z, 0-9, _ · 3-20 characters)","আপনার নাম":"Your name","ইউজারনেম, যেমন rafi09":"Username, e.g. rafi09","শুরু করুন":"Start","ইউজারনেম ঠিক নয়":"Invalid username","নাম লিখুন":"Enter your name","এই ইউজারনেম নেওয়া হয়ে গেছে":"This username is taken","হয়নি: ":"Failed: ",
+"বন্ধুর অনুরোধ":"Friend requests","খুঁজুন…":"Search…","এখনো কোনো বন্ধু নেই। উপরের + চেপে ইউজারনেম দিয়ে বন্ধু খুঁজুন।":"No friends yet. Tap + above and search by username.","বন্ধু খুঁজুন":"Find friends","ইউজারনেম লিখুন, যেমন rafi09":"Enter username, e.g. rafi09","কাউকে পাওয়া যায়নি":"No one found","যোগ করুন":"Add","অনুরোধ পাঠানো হয়েছে":"Request sent","সার্চ হয়নি: ":"Search failed: ","পাঠানো যায়নি: ":"Could not send: ","মেসেজ লিখুন…":"Type a message…","আমরা এখন বন্ধু!":"We are now friends!",
+"ক্লাস ও গ্রুপ":"Classes & Groups","আজকের নোটিশ":"Today's notice","অর্ধবার্ষিক পরীক্ষা ১২ দিন পরে শুরু":"Half-yearly exam starts in 12 days","গ্রুপ চ্যাট শীঘ্রই আসছে":"Group chat is coming soon",
+"স্টাডি হাব":"Study Hub","টি হোমওয়ার্ক বাকি":" homework due","জমার তারিখ ও রিমাইন্ডার":"Due dates & reminders","একসাথে পড়া · টাইমার":"Study together · Timer","প্রশ্ন-উত্তর":"Q&A","সহপাঠীকে জিজ্ঞেস করুন":"Ask classmates","ক্লাস ও পরীক্ষা":"Classes & exams","ক্লাস পোল":"Class Poll","ভোট দিন":"Vote","AI সহায়ক":"AI Helper","কঠিন পড়া সহজে":"Hard topics made easy",
+"কল এখন ডেমো, আসল ভয়েস/ভিডিও কল পরের ধাপে আসছে।":"Calls are a demo for now. Real voice/video calls are coming next.","কল করা হচ্ছে…":"Calling…","ভিডিও কল · ":"Video call · ","ভয়েস কল · ":"Voice call · ",
+"বায়ো (শ্রেণি, স্কুল)":"Bio (class, school)","সেভ করুন":"Save","অভিভাবক মোড":"Parent mode","অভিভাবক চ্যাটের তালিকা দেখতে পারবেন":"Parents can see the chat list","পড়ার সময় শান্ত মোড":"Quiet mode while studying","নোটিফিকেশন বন্ধ":"Notifications off","অ্যাডমিন প্যানেল":"Admin Panel","সদস্য ও অ্যাপ নিয়ন্ত্রণ":"Control members and the app","নিরাপত্তা: স্কুল ভেরিফাইড অ্যাকাউন্ট, বুলিং ফিল্টার, রিপোর্ট ও ব্লক সুবিধা যুক্ত হবে।":"Safety: school-verified accounts, bullying filter, report and block are coming.","লগআউট":"Log out",
+"গণিত — অধ্যায় ৫ অঙ্ক":"Math — Chapter 5 exercises","ইংরেজি রচনা: My Village":"English essay: My Village","বিজ্ঞান ল্যাব রিপোর্ট":"Science lab report","গণিত · আগামীকাল":"Math · Tomorrow","ইংরেজি · ২ দিন বাকি":"English · 2 days left","বিজ্ঞান · শুক্রবার":"Science · Friday","সাধারণ · শীঘ্রই":"General · Soon","নতুন হোমওয়ার্ক":"New homework",
+"ফোকাস টাইমার (২৫ মিনিট)":"Focus timer (25 min)","থামান":"Stop","রুমে আছে":"In the room","ভিডিও রুমে যোগ দিন":"Join video room","পিথাগোরাসের উপপাদ্য কীভাবে মনে রাখব?":"How do I remember the Pythagorean theorem?","সালোকসংশ্লেষণের সমীকরণটা কী?":"What is the photosynthesis equation?","টি উত্তর":" answers","আপনার প্রশ্ন লিখুন":"Write your question",
+"বাংলা · গণিত · ইংরেজি":"Bangla · Math · English","বিজ্ঞান · ধর্ম · গণিত":"Science · Religion · Math","ইংরেজি · সমাজ · আইসিটি":"English · Social studies · ICT","গণিত · বাংলা · বিজ্ঞান":"Math · Bangla · Science","ইংরেজি · শারীরিক শিক্ষা":"English · Physical education","অর্ধবার্ষিক পরীক্ষা":"Half-yearly exam","১২ দিন বাকি":"12 days left","ক্লাস পিকনিক কোথায় হবে?":"Where should the class picnic be?",
+"ডেমো মোড":"Demo mode","প্রশ্ন লিখুন…":"Type a question…",'প্রশ্ন লিখুন, যেমন: "সালোকসংশ্লেষণ সহজে বুঝিয়ে দাও"।':'Type a question, e.g. "Explain photosynthesis simply".',
+"মোট সদস্য":"Total members","এখন অনলাইন":"Online now","ভেরিফাইড":"Verified","অ্যাপ সেটিংস (সবার জন্য)":"App settings (for everyone)","অ্যাপের নাম":"App name","খালি রাখলে দেখাবে না":"Leave empty to hide","AI সহায়ক চালু":"AI Helper on","সদস্য তালিকা":"Member list","আনভেরিফাই":"Unverify","ভেরিফাই":"Verify","সদস্যের ডেটা মুছবেন?":"Delete this member's data?","অনুমতি নেই: ":"No permission: ","সেভ হয়েছে":"Saved","সেভ হয়নি: ":"Save failed: ","পূর্বাহ্ণ":"AM","অপরাহ্ণ":"PM"};
+const KS=Object.keys(D).filter(k=>k.length>=6).sort((a,b)=>b.length-a.length);
+const RX=[[/^(.+) লিখছে…$/,'$1 is typing…'],[/AI সংযোগ চালু হলে এখানে "(.*)" এর সহজ ব্যাখ্যা আসবে।/,'When AI is connected, a simple explanation of "$1" will appear here.']];
+const BD="০১২৩৪৫৬৭৮৯",HAS=/[\u0980-\u09FF]/;
+function tr(v){const t=v.trim();if(D[t]!==undefined)return v.replace(t,D[t]);let r=v;
+ for(const [re,rp] of RX)if(re.test(r))r=r.replace(re,rp);
+ for(const k of KS)if(r.includes(k))r=r.split(k).join(D[k]);
+ return r.replace(/[০-৯]/g,d=>BD.indexOf(d))}
+const O=new WeakMap(),L=new WeakMap();
+function tn(n){const p=n.parentElement;if(!p||p.closest("[data-keep],script,style"))return;
+ if(window.LANG!="en"){if(O.has(n)&&n.nodeValue===L.get(n))n.nodeValue=O.get(n);return}
+ const v=n.nodeValue;if(L.get(n)===v||!HAS.test(v))return;const t=tr(v);O.set(n,v);L.set(n,t);n.nodeValue=t}
+function ta(e){["placeholder","title"].forEach(a=>{const v=e.getAttribute&&e.getAttribute(a);if(v==null)return;const k="o_"+a;
+ if(window.LANG!="en"){if(e.dataset[k]!==undefined&&v===e.dataset["t"+k]){e.setAttribute(a,e.dataset[k])}return}
+ if(!HAS.test(v)||v===e.dataset["t"+k])return;const t=tr(v);e.dataset[k]=v;e.dataset["t"+k]=t;e.setAttribute(a,t)})}
+function proc(r){if(r.nodeType==3){tn(r);return}if(r.nodeType!=1)return;ta(r);r.querySelectorAll("[placeholder],[title]").forEach(ta);
+ const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode())tn(n)}
+new MutationObserver(ms=>{for(const m of ms){if(m.type=="characterData")tn(m.target);else m.addedNodes.forEach(proc)}}).observe(document.body,{childList:true,subtree:true,characterData:true});
+["alert","confirm","prompt"].forEach(k=>{const f=window[k];window[k]=(m,...a)=>f.call(window,window.LANG=="en"&&m?tr(String(m)):m,...a)});
+window.setLang=l=>{window.LANG=l;try{localStorage.nlang=l}catch(e){}document.documentElement.lang=l;
+ document.querySelectorAll("[data-l]").forEach(e=>e.classList.toggle("on",e.dataset.l==l));proc(document.body);render()};
+let l0="bn";try{l0=localStorage.nlang||"bn"}catch(e){}
+window.LANG=l0;document.querySelectorAll("[data-l]").forEach(e=>e.classList.toggle("on",e.dataset.l==l0));
+if(l0=="en"){document.documentElement.lang="en";proc(document.body)}
+render();
+})();
 </script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
