@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zync</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#06070f;--g:rgba(255,255,255,.07);--ln:rgba(255,255,255,.13);--tx:#eef1ff;--mu:#8e96c4;--a:#7c5cff;--b:#00e5ff;--c:#ff4fd8;--ok:#2dff9a}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eceeff;--g:rgba(255,255,255,.75);--ln:rgba(60,60,140,.16);--tx:#14163a;--mu:#5b6190}}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--tx);font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;overflow:hidden}
+.bgfx{position:fixed;inset:0;filter:blur(80px);opacity:.5}
+.bgfx i{position:absolute;border-radius:50%;animation:f 14s ease-in-out infinite alternate}
+.bgfx i:nth-child(1){width:60vmax;height:60vmax;background:var(--a);top:-20%;left:-20%}
+.bgfx i:nth-child(2){width:50vmax;height:50vmax;background:var(--b);bottom:-20%;right:-15%;animation-delay:-6s;opacity:.7}
+.bgfx i:nth-child(3){width:35vmax;height:35vmax;background:var(--c);top:35%;left:30%;animation-delay:-9s;opacity:.4}
+@keyframes f{to{transform:translate(6vw,5vh) scale(1.2)}}
+#root{position:relative;height:100%;max-width:520px;margin:auto;overflow:hidden}
+.view{height:100%;overflow:auto;padding:14px 16px 120px}
+.gl{background:var(--g);border:1px solid var(--ln);backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);border-radius:22px}
+svg{flex:none}
+h1.brand{font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--b),var(--a),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.row{display:flex;align-items:center;gap:12px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+small{color:var(--mu)}
+.av{width:var(--s,46px);height:var(--s,46px);border-radius:50%;padding:2px;background:conic-gradient(from 180deg,var(--k),var(--b),var(--c),var(--k));position:relative;flex:none}
+.av>span,.av>img{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:var(--k);color:#fff;font-weight:700;font-size:calc(var(--s,46px)*.4);border:2px solid var(--bg);object-fit:cover}
+.av.on::after{content:"";position:absolute;right:0;bottom:0;width:30%;height:30%;border-radius:50%;background:var(--ok);border:2px solid var(--bg);box-shadow:0 0 8px var(--ok)}
+.strip{display:flex;gap:14px;overflow:auto;padding:4px 0 12px;scrollbar-width:none}
+.strip div{text-align:center;font-size:12px;color:var(--mu);flex:none}
+.add{width:50px;height:50px;border-radius:50%;border:1.5px dashed var(--mu);display:grid;place-items:center;color:var(--mu);margin:0 auto 2px}
+.in{width:100%;padding:13px 16px;border-radius:16px;border:1px solid var(--ln);background:var(--g);color:var(--tx);font:inherit;outline:0}
+.in:focus{border-color:var(--b);box-shadow:0 0 0 3px rgba(0,229,255,.14)}
+.it{display:flex;align-items:center;gap:12px;padding:11px 8px;border-radius:18px;cursor:pointer}
+.it:active{background:var(--g)}
+.it .m{flex:1;min-width:0}.it b{display:block}.it small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd{background:linear-gradient(135deg,var(--c),var(--a));color:#fff;border-radius:99px;font-size:11px;padding:2px 8px}
+.bn{border:0;border-radius:14px;padding:10px 16px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.bn.s{padding:6px 12px;font-size:13px;border-radius:11px}.bn.r{background:linear-gradient(135deg,#ff5470,#ff8a3d)}.bn.o{background:var(--g);border:1px solid var(--ln);color:var(--tx)}
+.ib{width:40px;height:40px;border-radius:14px;border:1px solid var(--ln);background:var(--g);color:var(--tx);display:grid;place-items:center;cursor:pointer;flex:none}
+.nav{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:4;display:flex;gap:2px;padding:6px;border-radius:99px;background:rgba(20,22,45,.5);border:1px solid var(--ln);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);box-shadow:0 10px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.15)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .nav{background:rgba(255,255,255,.6)}}
+.nav button{border:0;background:none;color:var(--mu);width:50px;height:44px;border-radius:99px;display:grid;place-items:center;cursor:pointer;transition:.25s;position:relative}
+.nav button.on{color:#fff;background:linear-gradient(135deg,var(--a),var(--b));box-shadow:0 0 18px color-mix(in srgb,var(--a) 70%,transparent)}
+.nav button .dot{position:absolute;top:7px;right:11px;width:8px;height:8px;border-radius:50%;background:var(--c)}
+.page{position:absolute;inset:0;z-index:6;background:var(--bg);display:flex;flex-direction:column;animation:sl .28s}
+@keyframes sl{from{transform:translateX(30px);opacity:0}}
+.hd{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--ln)}
+.hd h3{flex:1}.hd .t{flex:1;min-width:0}.hd .t b{display:block}
+.bdy{flex:1;overflow:auto;padding:16px}
+.msgs{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+.bub{max-width:80%;padding:10px 15px;border-radius:20px;line-height:1.45;animation:pp .25s}
+@keyframes pp{from{opacity:0;transform:translateY(8px) scale(.96)}}
+.bub.in{background:var(--g);border:1px solid var(--ln);border-bottom-left-radius:6px;align-self:flex-start}
+.bub.out{align-self:flex-end;color:#fff;background:linear-gradient(135deg,var(--a),var(--b));border-bottom-right-radius:6px}
+.bub em{display:block;font-size:11px;font-style:normal;color:var(--b);margin-bottom:2px}
+.bub time{display:block;font-size:10px;opacity:.65;margin-top:2px}
+.ty{height:18px;padding:0 18px;font-size:12px;color:var(--mu)}
+.bar{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+.bar .in{flex:1}.send{width:48px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff;display:grid;place-items:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;min-height:112px;position:relative;overflow:hidden}
+.tile .ico{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;background:var(--k)}
+.tile small{display:block}
+.card{padding:14px;margin-bottom:12px}
+.hero{padding:18px;margin-bottom:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 45%,transparent),color-mix(in srgb,var(--b) 25%,transparent));}
+.sw{display:flex;gap:8px;margin:8px 0}.sw i{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent}.sw i.on{border-color:#fff}
+.tg{width:48px;height:28px;border-radius:99px;background:var(--ln);position:relative;cursor:pointer;flex:none;transition:.2s}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.tg.on{background:var(--a)}.tg.on::after{left:23px}
+.bar2{height:8px;border-radius:9px;background:var(--ln);overflow:hidden;margin-top:6px}.bar2 i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--b))}
+.stat{padding:14px}.stat b{font-size:26px;display:block}
+.call{position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:radial-gradient(circle at 50% 30%,#2a1a6e,#05060f 70%);color:#fff}
+.call .self{position:absolute;right:14px;top:calc(14px + env(safe-area-inset-top,0px));width:92px;height:124px;border-radius:18px;background:linear-gradient(160deg,#1c2a5a,#4a1d7a);border:1px solid var(--ln);display:none;place-items:center;font-size:12px;overflow:hidden}
+.call.video .self{display:grid}
+.call .av{animation:pl 1.8s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 rgba(0,229,255,.55)}100%{box-shadow:0 0 0 55px rgba(0,229,255,0)}}
+.ctl{display:flex;gap:14px;margin-top:28px}
+.ctl button{width:58px;height:58px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}
+.ctl .end{background:#ff3b5c;box-shadow:0 0 24px #ff3b5c}.ctl .off{background:#fff;color:#111}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.chip{padding:8px 16px;border-radius:99px;border:1px solid var(--ln);background:var(--g);cursor:pointer}.chip.on{background:linear-gradient(135deg,var(--a),var(--b));color:#fff;border-color:transparent}
+.big{font-size:56px;font-weight:800;text-align:center;letter-spacing:2px;margin:20px 0}
+.ban{opacity:.45}
+#lg{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:20px}
+#lg .box{width:min(380px,100%);padding:32px 24px;text-align:center;display:flex;flex-direction:column;gap:14px}
+.zl{width:84px;height:84px;margin:auto;border-radius:26px;display:grid;place-items:center;font-size:48px;font-weight:800;color:#fff;background:conic-gradient(from 200deg,var(--a),var(--b),var(--c),var(--a));box-shadow:0 0 40px color-mix(in srgb,var(--a) 70%,transparent)}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:16px;border:0;background:#fff;color:#222;font:inherit;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="bgfx"><i></i><i></i><i></i></div>
+<div id="lg"><div class="gl box"><div class="zl">Z</div><h1 class="brand" style="font-size:34px">Zync</h1><p style="color:var(--mu)">পড়াশোনা আর বন্ধুত্ব, এক জায়গায়</p>
+<button class="gbtn" id="gl"><svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.800 2.400 30.300 0 24 0 14.600 0 6.500 5.400 2.600 13.200l7.900 6.100C12.400 13.600 17.700 9.500 24 9.500z"/><path fill="#4285F4" d="M46.500 24.500c0-1.600-.1-3.100-.4-4.500H24v9h12.700c-.6 3-2.300 5.500-4.800 7.200l7.600 5.900c4.500-4.100 7-10.200 7-17.600z"/><path fill="#FBBC05" d="M10.500 28.700A14.500 14.500 0 019.500 24c0-1.600.3-3.200.8-4.700l-7.900-6.100A24 24 0 000 24c0 3.900.9 7.500 2.600 10.800z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.600-5.900c-2.100 1.400-4.900 2.300-8.300 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>Google দিয়ে লগইন করুন</button><small id="le" style="color:#ff5470"></small></div></div>
+<div id="root"><div class="view" id="v"></div><nav class="nav" id="nav"></nav></div>
+
+<script>
+const I={
+chat:'<path d="M5 5h14a2 2 0 012 2v8a2 2 0 01-2 2h-7l-5 4v-4H5a2 2 0 01-2-2V7a2 2 0 012-2z"/>',
+users:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.5c2.7 0 4.5 1.8 4.5 4.5"/>',
+spark:'<path d="M12 3l2.3 5.7L20 11l-5.7 2.3L12 19l-2.3-5.7L4 11l5.7-2.3z"/><path d="M19 3v4M17 5h4"/>',
+phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A15 15 0 013 6a2 2 0 012-2z"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+video:'<rect x="3" y="6" width="12" height="12" rx="3"/><path d="M15 11l6-3v8l-6-3"/>',
+mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>',
+micoff:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3M4 4l16 16"/>',
+spk:'<path d="M4 9h4l5-4v14l-5-4H4zM17 8a5 5 0 010 8"/>',
+end:'<path d="M3 14c5-4 13-4 18 0l-2 3-4-1v-3a10 10 0 00-6 0v3l-4 1z"/>',
+send:'<path d="M3 11l18-8-8 18-2-8z"/>',
+back:'<path d="M15 5l-7 7 7 7"/>',
+search:'<circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+check:'<path d="M5 12l5 5 9-10"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
+cam:'<rect x="3" y="7" width="18" height="13" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M9 7l1.5-3h3L15 7"/>',
+book:'<path d="M5 4h14v16H7a2 2 0 01-2-2z"/><path d="M5 18a2 2 0 012-2h12"/>',
+timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
+help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-1 .7-1.5 1-1.5 2.5M12 17v.5"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+poll:'<path d="M5 20V10M12 20V4M19 20v-7"/>',
+task:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12l3 3 5-6"/>',
+x:'<path d="M6 6l12 12M18 6L6 18"/>',
+trash:'<path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/>',
+ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
+moon:'<path d="M20 14A8 8 0 0110 4a8 8 0 1010 10z"/>',
+eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+bell:'<path d="M6 16V11a6 6 0 0112 0v5l2 2H4zM10 21h4"/>',
+out:'<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>'};
+const ic=(k,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg>`;
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const bn=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]),tm=()=>new Date().toLocaleTimeString("bn-BD",{hour:"2-digit",minute:"2-digit"});
+const K=["#7c5cff","#00a8e8","#ff4fd8","#ff8a3d","#1fc98f","#ff5470"];
+let S={me:{name:"আপনি",role:"ছাত্র",bio:"নবম শ্রেণি · বিজ্ঞান",photo:"",parent:false,quiet:false},
+cfg:{app:"Zync",tag:"পড়াশোনা আর বন্ধুত্ব, এক জায়গায়",acc:"#7c5cff",banner:"",ai:true,study:true}};
+try{const s=localStorage.getItem("nova");if(s)S=Object.assign(S,JSON.parse(s))}catch(e){}
+const save=()=>{try{localStorage.setItem("nova",JSON.stringify(S))}catch(e){}};
+let MEM=[["রাফি","৯-ক",1,1,0],["তানিয়া","৯-ক",1,1,0],["আরিফ","৯-খ",0,0,0],["সুমাইয়া","৮-ক",1,0,0],["নাফিস","৮-খ",0,0,0],["মিতু আপু","শিক্ষক",1,1,0],["ইমরান","১০-ক",1,0,0]].map(a=>({n:a[0],c:a[1],on:a[2],v:a[3],ban:a[4]}));
+let CH=[
+{id:1,n:"রাফি",k:0,on:1,sub:"৯-ক",u:2,m:[["রাফি","কালকের গণিত হোমওয়ার্ক করেছিস?"],["রাফি","১২ নম্বর অঙ্কটা বুঝিনি"]]},
+{id:2,n:"তানিয়া",k:1,on:1,sub:"৯-ক",u:0,m:[["me","স্টাডি রুমে আসো"],["তানিয়া","এক মিনিট, আসছি!"]]},
+{id:3,n:"আরিফ",k:2,on:0,sub:"৯-খ",u:0,m:[["আরিফ","নোটগুলোর জন্য ধন্যবাদ"]]},
+{id:4,n:"ক্লাস ৯-ক",g:1,k:3,on:0,sub:"৩৮ জন সদস্য",u:3,m:[["মিতু আপু","কাল বিজ্ঞান ক্লাস টেস্ট, অধ্যায় ৩ ও ৪"],["রাফি","স্যার সিলেবাস কি PDF এ পাব?"]]},
+{id:5,n:"বিজ্ঞান ক্লাব",g:1,k:4,on:0,sub:"১২ জন সদস্য",u:0,m:[["ইমরান","শুক্রবার প্রজেক্ট দেখাব সবাই"]]},
+{id:6,n:"স্কুল নোটিশ",g:1,k:5,on:0,sub:"শুধু শিক্ষক পোস্ট করতে পারবেন",u:1,m:[["মিতু আপু","অর্ধবার্ষিক পরীক্ষার রুটিন প্রকাশিত হয়েছে"]]}];
+let HW=[{t:"গণিত — অধ্যায় ৫ অঙ্ক",s:"গণিত",d:"আগামীকাল",x:0},{t:"ইংরেজি রচনা: My Village",s:"ইংরেজি",d:"২ দিন বাকি",x:0},{t:"বিজ্ঞান ল্যাব রিপোর্ট",s:"বিজ্ঞান",d:"শুক্রবার",x:1}];
+let QA=[{q:"পিথাগোরাসের উপপাদ্য কীভাবে মনে রাখব?",a:3,by:"তানিয়া"},{q:"সালোকসংশ্লেষণের সমীকরণটা কী?",a:5,by:"রাফি"}];
+let PO={q:"ক্লাস পিকনিক কোথায় হবে?",o:[["জাদুঘর",12],["পার্ক",20],["নদীর ধার",8]],v:-1};
+let tab=0;
+const av=(n,k,s=46,photo="",on=0)=>`<div class="av ${on?'on':''}" style="--s:${s}px;--k:${K[k%6]}">${photo?`<img src="${photo}">`:`<span>${esc(n[0]||"?")}</span>`}</div>`;
+const page=h=>{const p=document.createElement("div");p.className="page";p.innerHTML=h;$("#root").append(p);return p};
+const hd=(t,r="")=>`<div class="hd"><button class="ib" onclick="this.closest('.page').remove();render()">${ic('back')}</button><h3>${t}</h3>${r}</div>`;
+const tg=(on,id)=>`<div class="tg ${on?'on':''}" id="${id}"></div>`;
+function applyCfg(){document.documentElement.style.setProperty("--a",S.cfg.acc);document.title=S.cfg.app}
+const NAV=[["chat","চ্যাট"],["users","ক্লাস"],["spark","স্টাডি"],["phone","কল"],["user","আমি"]];
+function render(){
+ applyCfg();
+ $("#nav").innerHTML=NAV.map((n,i)=>`<button class="${tab==i?'on':''}" onclick="tab=${i};render()" title="${n[1]}">${ic(n[0],23)}${i==0&&CH.some(c=>!c.g&&c.u)&&tab!=0?'<span class="dot"></span>':''}</button>`).join("");
+ const v=$("#v");v.innerHTML=[vChats,vClass,vStudy,vCalls,vMe][tab]();
+ if(tab==0)$("#q").oninput=e=>{const q=e.target.value;document.querySelectorAll(".it").forEach(x=>x.style.display=x.textContent.includes(q)?"":"none")};
+ if(tab==4)wireMe();
+}
+const row=c=>`<div class="it" onclick="openChat(${c.id})">${av(c.n,c.k,48,"",c.on)}<div class="m"><b>${esc(c.n)}</b><small>${esc(c.m[c.m.length-1][1])}</small></div>${c.u?`<span class="bd">${bn(c.u)}</span>`:""}</div>`;
+function vChats(){
+ return `<div class="top"><h1 class="brand">${esc(S.cfg.app)}</h1><button class="ib">${ic('bell')}</button></div>
+ ${S.cfg.banner?`<div class="gl card" style="border-color:var(--a)"><small>📌 নোটিশ</small><div>${esc(S.cfg.banner)}</div></div>`:""}
+ <div class="strip">${CH.filter(c=>!c.g).map(c=>`<div onclick="openChat(${c.id})">${av(c.n,c.k,54,"",c.on)}${esc(c.n)}</div>`).join("")}<div onclick="addFriend()"><span class="add">${ic('plus')}</span>যোগ</div></div>
+ <input class="in" id="q" placeholder="খুঁজুন…" style="margin-bottom:8px">${CH.filter(c=>!c.g).map(row).join("")}`}
+function vClass(){return `<div class="top"><h1 class="brand">ক্লাস ও গ্রুপ</h1><button class="ib" onclick="addGroup()">${ic('plus')}</button></div>
+ <div class="gl hero"><small>আজকের নোটিশ</small><div style="margin-top:4px;font-weight:600">অর্ধবার্ষিক পরীক্ষা ১২ দিন পরে শুরু</div></div>${CH.filter(c=>c.g).map(row).join("")}`}
+const TL=[["task","হোমওয়ার্ক","জমার তারিখ ও রিমাইন্ডার",0,hw],["timer","স্টাডি রুম","একসাথে পড়া · টাইমার",1,room],["help","প্রশ্ন-উত্তর","সহপাঠীকে জিজ্ঞেস করুন",2,qa],["cal","রুটিন","ক্লাস ও পরীক্ষা",3,rt],["poll","ক্লাস পোল","ভোট দিন",4,poll],["spark","AI সহায়ক","কঠিন পড়া সহজে",5,ai]];
+function vStudy(){
+ const due=HW.filter(h=>!h.x).length;
+ return `<div class="top"><h1 class="brand">স্টাডি হাব</h1></div>
+ <div class="gl hero"><small>আজ</small><div style="font-size:20px;font-weight:700;margin:4px 0">${bn(due)}টি হোমওয়ার্ক বাকি</div><div class="bar2"><i style="width:${HW.length?(HW.length-due)/HW.length*100:0}%"></i></div></div>
+ <div class="grid">${TL.filter(t=>t[3]!=5||S.cfg.ai).map(t=>`<div class="gl tile" onclick="TL[${TL.indexOf(t)}][4]()"><div class="ico" style="--k:${K[t[3]]}">${ic(t[0])}</div><div><b>${t[1]}</b><small>${t[2]}</small></div></div>`).join("")}</div>`}
+const CALLS=[[0,"↗","আউটগোয়িং"],[1,"↙","মিসড কল"],[3,"↗","আউটগোয়িং"],[6,"↙","ইনকামিং"]];
+function vCalls(){return `<div class="top"><h1 class="brand">কল</h1></div>`+CALLS.map(c=>{const p=MEM[c[0]];return `<div class="it" onclick="startCall('${esc(p.n)}',${c[0]},0)">${av(p.n,c[0],48)}<div class="m"><b>${esc(p.n)}</b><small style="${c[2]=='মিসড কল'?'color:#ff5470':''}">${c[1]} ${c[2]} · আজ</small></div><button class="ib" onclick="event.stopPropagation();startCall('${esc(p.n)}',${c[0]},1)">${ic('video',20)}</button></div>`}).join("")}
+function vMe(){const m=S.me;return `<div style="text-align:center;padding:10px 0 18px"><div style="position:relative;display:inline-block">${av(m.name,0,104,m.photo)}<label class="ib" style="position:absolute;right:-4px;bottom:-4px;width:38px;height:38px;border-radius:50%;background:var(--a);color:#fff;border:0">${ic('cam',18)}<input type="file" accept="image/*" id="ph" hidden></label></div>
+ <h2 style="margin-top:10px">${esc(m.name)}</h2><small>${esc(m.role)} · ${esc(m.bio)}</small></div>
+ <div class="gl card"><input class="in" id="nm" value="${esc(m.name)}" placeholder="নাম"><input class="in" id="bi" value="${esc(m.bio)}" placeholder="বায়ো (শ্রেণি, স্কুল)" style="margin-top:8px"><button class="bn s" id="sv" style="margin-top:10px">সেভ করুন</button></div>
+ <div class="gl card"><div class="row"><span style="color:var(--b)">${ic('eye')}</span><div style="flex:1"><b>অভিভাবক মোড</b><small>অভিভাবক চ্যাটের তালিকা দেখতে পারবেন</small></div>${tg(m.parent,'tp')}</div>
+ <div class="row" style="margin-top:14px"><span style="color:var(--c)">${ic('moon')}</span><div style="flex:1"><b>পড়ার সময় শান্ত মোড</b><small>নোটিফিকেশন বন্ধ</small></div>${tg(m.quiet,'tq')}</div></div>
+ ${window.IS_ADMIN?`<div class="gl card row" onclick="adminLogin()" style="cursor:pointer"><span style="color:var(--ok)">${ic('shield')}</span><div style="flex:1"><b>অ্যাডমিন প্যানেল</b><small>সদস্য ও অ্যাপ নিয়ন্ত্রণ</small></div>${ic('back',18).replace('<svg','<svg style="transform:rotate(180deg)"')}</div>`:""}<button class="bn r" style="width:100%;margin-bottom:12px" onclick="doLogout()">লগআউট</button>
+ <div class="gl card" style="font-size:13px;color:var(--mu)">নিরাপত্তা: স্কুল ভেরিফাইড অ্যাকাউন্ট, বুলিং ফিল্টার, রিপোর্ট ও ব্লক সুবিধা যুক্ত হবে।</div>`}
+function wireMe(){
+ $("#ph").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=c.height=200;const x=c.getContext("2d"),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,200,200);S.me.photo=c.toDataURL("image/jpeg",.8);save();render()};im.src=r.result};r.readAsDataURL(f)};
+ $("#sv").onclick=()=>{S.me.name=$("#nm").value.trim()||"আপনি";S.me.bio=$("#bi").value;save();render()};
+ $("#tp").onclick=()=>{S.me.parent=!S.me.parent;save();render()};$("#tq").onclick=()=>{S.me.quiet=!S.me.quiet;save();render()};
+}
+function openChat(id){
+ const c=CH.find(x=>x.id==id);c.u=0;
+ const p=page(`<div class="hd"><button class="ib b">${ic('back')}</button>${av(c.n,c.k,40,"",c.on)}<div class="t"><b>${esc(c.n)}</b><small>${esc(c.sub)}</small></div><button class="ib a">${ic('phone',20)}</button><button class="ib v">${ic('video',20)}</button></div><div class="msgs"></div><div class="ty"></div><div class="bar"><input class="in" placeholder="মেসেজ লিখুন…"><button class="send">${ic('send',20)}</button></div>`);
+ const M=p.querySelector(".msgs"),T=p.querySelector(".ty"),inp=p.querySelector("input");
+ const add=(w,t)=>{const d=document.createElement("div");d.className="bub "+(w=="me"?"out":"in");d.innerHTML=(c.g&&w!="me"?`<em>${esc(w)}</em>`:"")+esc(t)+`<time>${tm()}</time>`;M.append(d);M.scrollTop=M.scrollHeight};
+ c.m.forEach(m=>add(m[0],m[1]));
+ const R=["দারুণ!","ঠিক আছে 👍","পরে বলছি","হা হা","ভালো আইডিয়া!"];
+ const go=()=>{const v=inp.value.trim();if(!v)return;inp.value="";c.m.push(["me",v]);add("me",v);const w=c.g?MEM[Math.random()*5|0].n:c.n;T.textContent=w+" লিখছে…";
+  setTimeout(()=>{const r=R[Math.random()*R.length|0];c.m.push([w,r]);T.textContent="";if(p.isConnected)add(w,r)},1300)};
+ p.querySelector(".send").onclick=go;inp.onkeydown=e=>{if(e.key=="Enter")go()};
+ p.querySelector(".b").onclick=()=>{p.remove();render()};
+ p.querySelector(".a").onclick=()=>startCall(c.n,c.k,0);p.querySelector(".v").onclick=()=>startCall(c.n,c.k,1);
+}
+let ct;
+function startCall(n,k,v){
+ const p=document.createElement("div");p.className="call"+(v?" video":"");
+ p.innerHTML=`<div class="self">আপনি</div>${av(n,k,130)}<h2>${esc(n)}</h2><p id="cs" style="color:#9fe9ff">কল করা হচ্ছে…</p><div class="ctl"><button id="m1">${ic('mic')}</button><button id="m2">${ic('video')}</button><button>${ic('spk')}</button><button class="end">${ic('end')}</button></div>`;
+ $("#root").append(p);let s=0;clearInterval(ct);
+ setTimeout(()=>{if(!p.isConnected)return;ct=setInterval(()=>{s++;$("#cs").textContent=(p.classList.contains("video")?"ভিডিও কল · ":"ভয়েস কল · ")+bn(String(s/60|0).padStart(2,0)+":"+String(s%60).padStart(2,0))},1000)},1800);
+ const m1=p.querySelector("#m1");let mu=0;m1.onclick=()=>{mu=!mu;m1.classList.toggle("off",mu);m1.innerHTML=ic(mu?'micoff':'mic')};
+ p.querySelector("#m2").onclick=e=>{p.classList.toggle("video");e.currentTarget.classList.toggle("off",!p.classList.contains("video"))};
+ p.querySelector(".end").onclick=()=>{clearInterval(ct);p.remove()};
+}
+function addFriend(){const n=prompt("বন্ধুর নাম");if(!n)return;CH.push({id:Date.now(),n,k:CH.length,on:1,sub:"নতুন বন্ধু",u:0,m:[[n,"আমরা এখন বন্ধু! 🎉"]]});MEM.push({n,c:"নতুন",on:1,v:0,ban:0});render()}
+function addGroup(){const n=prompt("গ্রুপের নাম");if(!n)return;CH.push({id:Date.now(),n,g:1,k:CH.length,on:0,sub:"১ জন সদস্য",u:0,m:[["me","গ্রুপ তৈরি হয়েছে"]]});render()}
+function tool(t,fill){const p=page(hd(t)+'<div class="bdy"></div>');fill(p.querySelector(".bdy"),p);return p}
+function hw(){tool("হোমওয়ার্ক",(b)=>{const d=()=>{b.innerHTML=HW.map((h,i)=>`<div class="gl card row" data-i="${i}" style="cursor:pointer;${h.x?'opacity:.5':''}"><span style="color:${h.x?'var(--ok)':'var(--mu)'}">${ic(h.x?'check':'task')}</span><div style="flex:1"><b style="${h.x?'text-decoration:line-through':''}">${esc(h.t)}</b><small>${h.s} · ${h.d}</small></div></div>`).join("")+`<div class="row"><input class="in" id="nh" placeholder="নতুন হোমওয়ার্ক"><button class="bn" id="ah">${ic('plus',18)}</button></div>`;
+  b.querySelectorAll("[data-i]").forEach(e=>e.onclick=()=>{HW[e.dataset.i].x^=1;d()});$("#ah").onclick=()=>{const v=$("#nh").value.trim();if(v){HW.push({t:v,s:"সাধারণ",d:"শীঘ্রই",x:0});d()}}};d()})}
+let pm=1500,pi=0;
+function room(){tool("স্টাডি রুম",(b,p)=>{const d=()=>{b.innerHTML=`<div class="gl hero" style="text-align:center"><small>ফোকাস টাইমার (২৫ মিনিট)</small><div class="big" id="pt">${bn(String(pm/60|0).padStart(2,0)+":"+String(pm%60).padStart(2,0))}</div><button class="bn" id="ps">${pi?'থামান':'শুরু করুন'}</button></div>
+ <b>রুমে আছে</b><div class="strip" style="margin-top:8px">${MEM.slice(0,4).map((m,i)=>`<div>${av(m.n,i,50,"",1)}${esc(m.n)}</div>`).join("")}</div><button class="bn" style="width:100%" onclick="startCall('স্টাডি রুম',4,1)">ভিডিও রুমে যোগ দিন</button>`;
+ $("#ps").onclick=()=>{if(pi){clearInterval(pi);pi=0}else pi=setInterval(()=>{pm--;if(!p.isConnected){clearInterval(pi);pi=0;return}const e=$("#pt");if(e)e.textContent=bn(String(pm/60|0).padStart(2,0)+":"+String(pm%60).padStart(2,0));if(pm<=0){clearInterval(pi);pi=0;pm=1500}},1000);d()}};d()})}
+function qa(){tool("প্রশ্ন-উত্তর",b=>{const d=()=>{b.innerHTML=QA.map(q=>`<div class="gl card"><b>${esc(q.q)}</b><small>${esc(q.by)} · ${bn(q.a)}টি উত্তর</small></div>`).join("")+`<div class="row"><input class="in" id="nq" placeholder="আপনার প্রশ্ন লিখুন"><button class="bn" id="aq">${ic('plus',18)}</button></div>`;$("#aq").onclick=()=>{const v=$("#nq").value.trim();if(v){QA.unshift({q:v,a:0,by:S.me.name});d()}}};d()})}
+function rt(){tool("রুটিন",b=>{b.innerHTML=[["শনি","বাংলা · গণিত · ইংরেজি"],["রবি","বিজ্ঞান · ধর্ম · গণিত"],["সোম","ইংরেজি · সমাজ · আইসিটি"],["মঙ্গল","গণিত · বাংলা · বিজ্ঞান"],["বুধ","ইংরেজি · শারীরিক শিক্ষা"]].map((r,i)=>`<div class="gl card row"><b style="width:52px;color:var(--b)">${r[0]}</b><span>${r[1]}</span></div>`).join("")+`<div class="gl hero"><b>অর্ধবার্ষিক পরীক্ষা</b><small style="display:block">১২ দিন বাকি</small></div>`})}
+function poll(){tool("ক্লাস পোল",b=>{const d=()=>{const t=PO.o.reduce((a,o)=>a+o[1],0);b.innerHTML=`<h3 style="margin-bottom:12px">${PO.q}</h3>`+PO.o.map((o,i)=>`<div class="gl card" data-i="${i}" style="cursor:pointer"><div class="row"><b style="flex:1">${o[0]}</b><small>${bn(Math.round(o[1]/t*100))}%</small></div><div class="bar2"><i style="width:${o[1]/t*100}%"></i></div></div>`).join("");
+ b.querySelectorAll("[data-i]").forEach(e=>e.onclick=()=>{if(PO.v<0){PO.v=+e.dataset.i;PO.o[PO.v][1]++;d()}})};d()})}
+function ai(){tool("AI সহায়ক",(b)=>{b.innerHTML=`<div class="gl card"><small>ডেমো মোড</small><div>প্রশ্ন লিখুন, যেমন: "সালোকসংশ্লেষণ সহজে বুঝিয়ে দাও"।</div></div><div id="ao"></div><div class="row"><input class="in" id="ai" placeholder="প্রশ্ন লিখুন…"><button class="bn" id="as">${ic('send',18)}</button></div>`;
+ $("#as").onclick=()=>{const v=$("#ai").value.trim();if(!v)return;$("#ai").value="";$("#ao").insertAdjacentHTML("beforeend",`<div class="bub out" style="margin:8px 0 8px auto">${esc(v)}</div><div class="bub in">AI সংযোগ চালু হলে এখানে "${esc(v.slice(0,30))}" এর সহজ ব্যাখ্যা আসবে।</div>`)}})}
+function adminLogin(){const p=prompt("অ্যাডমিন পিন দিন (ডেমো পিন: 1234)");if(p==="1234")admin();else if(p!==null)alert("ভুল পিন")}
+function admin(){
+ const pg=page(hd("অ্যাডমিন প্যানেল")+'<div class="bdy"></div>'),b=pg.querySelector(".bdy");
+ const d=()=>{const on=MEM.filter(m=>m.on&&!m.ban).length,bd=MEM.filter(m=>m.ban).length;
+ b.innerHTML=`<div class="grid" style="margin-bottom:14px"><div class="gl stat"><small>মোট সদস্য</small><b>${bn(MEM.length)}</b></div><div class="gl stat"><small>অনলাইন</small><b style="color:var(--ok)">${bn(on)}</b></div><div class="gl stat"><small>গ্রুপ</small><b>${bn(CH.filter(c=>c.g).length)}</b></div><div class="gl stat"><small>ব্যান</small><b style="color:#ff5470">${bn(bd)}</b></div></div>
+ <h3 style="margin:6px 0 8px">অ্যাপ সেটিংস</h3><div class="gl card"><small>অ্যাপের নাম</small><input class="in" id="an" value="${esc(S.cfg.app)}"><small style="display:block;margin-top:8px">স্লোগান</small><input class="in" id="at" value="${esc(S.cfg.tag)}"><small style="display:block;margin-top:8px">সবার জন্য নোটিশ</small><input class="in" id="ab" value="${esc(S.cfg.banner)}" placeholder="খালি রাখলে দেখাবে না"><small style="display:block;margin-top:8px">থিম রং</small><div class="sw">${K.map(c=>`<i data-c="${c}" class="${S.cfg.acc==c?'on':''}" style="background:${c}"></i>`).join("")}</div>
+ <div class="row" style="margin:10px 0"><b style="flex:1">AI সহায়ক চালু</b>${tg(S.cfg.ai,'ta')}</div><button class="bn" id="as">সেভ করুন</button></div>
+ <h3 style="margin:14px 0 8px">সদস্য তালিকা</h3>${MEM.map((m,i)=>`<div class="gl card row ${m.ban?'ban':''}">${av(m.n,i,40,"",m.on)}<div style="flex:1;min-width:0"><b>${esc(m.n)} ${m.v?'<span style="color:var(--b)">✔</span>':''}</b><small>${esc(m.c)}</small></div><button class="bn s o" data-v="${i}">${m.v?'আনভেরিফাই':'ভেরিফাই'}</button><button class="ib" data-b="${i}" style="width:34px;height:34px">${ic('ban',16)}</button><button class="ib" data-d="${i}" style="width:34px;height:34px">${ic('trash',16)}</button></div>`).join("")}
+ <button class="bn" id="am" style="width:100%">${ic('plus',16)} নতুন সদস্য যোগ</button><p style="margin-top:14px;font-size:12px;color:var(--mu)">এটি ডেমো প্যানেল। আসল অ্যাপে সদস্য ডেটা ও পিন সার্ভারে (Firebase/Supabase) থাকতে হবে।</p>`;
+ b.querySelectorAll("[data-v]").forEach(e=>e.onclick=()=>{MEM[e.dataset.v].v^=1;d()});b.querySelectorAll("[data-b]").forEach(e=>e.onclick=()=>{MEM[e.dataset.b].ban^=1;d()});
+ b.querySelectorAll("[data-d]").forEach(e=>e.onclick=()=>{if(confirm("সদস্যকে মুছবেন?")){MEM.splice(e.dataset.d,1);d()}});
+ b.querySelectorAll("[data-c]").forEach(e=>e.onclick=()=>{S.cfg.acc=e.dataset.c;applyCfg();d()});
+ $("#ta").onclick=()=>{S.cfg.ai=!S.cfg.ai;d()};
+ $("#as").onclick=()=>{S.cfg.app=$("#an").value||"Nova";S.cfg.tag=$("#at").value;S.cfg.banner=$("#ab").value;save();applyCfg();alert("সেভ হয়েছে ✔")};
+ $("#am").onclick=()=>{const n=prompt("সদস্যের নাম");if(n){MEM.push({n,c:"নতুন",on:0,v:0,ban:0});d()}}};d();
+}
+render();
+</script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,setDoc,getDoc,updateDoc,deleteDoc,onSnapshot,collection,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const ADMIN="kayes.vai1234567@gmail.com";
+const app=initializeApp({apiKey:"AIzaSyBSFB4oCLXtWTALrcC8i7_Ji8WeK6VFJYo",authDomain:"zync-cd248.firebaseapp.com",projectId:"zync-cd248",storageBucket:"zync-cd248.firebasestorage.app",messagingSenderId:"457868409220",appId:"1:457868409220:web:d1255dda8efce4319c45d1"});
+const auth=getAuth(app),db=getFirestore(app);
+window.IS_ADMIN=false;
+$("#gl").onclick=async()=>{$("#le").textContent="";try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){$("#le").textContent="লগইন হয়নি: "+(e.code||e.message)}};
+window.doLogout=()=>signOut(auth);
+window.adminLogin=()=>window.admin();
+let hb;
+onAuthStateChanged(auth,async u=>{
+ clearInterval(hb);
+ if(!u){window.IS_ADMIN=false;$("#lg").style.display="flex";return}
+ const ref=doc(db,"users",u.uid);
+ try{
+  const sn=await getDoc(ref);
+  if(sn.exists()&&sn.data().banned){await signOut(auth);$("#le").textContent="এই অ্যাকাউন্ট ব্যান করা হয়েছে";return}
+  if(!sn.exists())await setDoc(ref,{name:u.displayName||"ব্যবহারকারী",email:u.email,photoURL:u.photoURL||"",banned:false,verified:false,joined:serverTimestamp(),lastSeen:Date.now()});
+  else await updateDoc(ref,{lastSeen:Date.now()});
+  hb=setInterval(()=>updateDoc(ref,{lastSeen:Date.now()}).catch(()=>{}),60000);
+ }catch(e){$("#le").textContent="Firestore Rules সেট করুন ("+e.code+")";}
+ window.IS_ADMIN=u.email===ADMIN&&u.emailVerified;
+ if(S.me.name=="আপনি")S.me.name=u.displayName||"আপনি";
+ if(!S.me.photo&&u.photoURL)S.me.photo=u.photoURL;
+ S.me.role=window.IS_ADMIN?"অ্যাডমিন":"সদস্য";
+ $("#lg").style.display="none";render();
+ onSnapshot(doc(db,"config","app"),d=>{if(d.exists()){Object.assign(S.cfg,d.data());render()}},()=>{});
+});
+window.admin=function(){
+ if(!window.IS_ADMIN)return;
+ const pg=page(hd("অ্যাডমিন প্যানেল")+'<div class="bdy"></div>'),b=pg.querySelector(".bdy");let acc=S.cfg.acc;
+ b.innerHTML=`<div class="grid" id="st" style="margin-bottom:14px"></div><h3 style="margin:6px 0 8px">অ্যাপ সেটিংস (সবার জন্য)</h3><div class="gl card"><small>অ্যাপের নাম</small><input class="in" id="an" value="${esc(S.cfg.app)}"><small style="display:block;margin-top:8px">নোটিশ</small><input class="in" id="ab" value="${esc(S.cfg.banner||"")}" placeholder="খালি রাখলে দেখাবে না"><small style="display:block;margin-top:8px">থিম রং</small><div class="sw">${K.map(c=>`<i data-c="${c}" class="${acc==c?"on":""}" style="background:${c}"></i>`).join("")}</div><div class="row" style="margin:10px 0"><b style="flex:1">AI সহায়ক চালু</b>${tg(S.cfg.ai,"ta")}</div><button class="bn" id="as">সেভ করুন</button></div><h3 style="margin:14px 0 8px">সদস্য তালিকা</h3><div id="ml"></div>`;
+ b.querySelectorAll("[data-c]").forEach(e=>e.onclick=()=>{acc=e.dataset.c;b.querySelectorAll("[data-c]").forEach(x=>x.classList.toggle("on",x==e))});
+ $("#ta").onclick=e=>e.currentTarget.classList.toggle("on");
+ $("#as").onclick=async()=>{try{await setDoc(doc(db,"config","app"),{app:$("#an").value||"Zync",banner:$("#ab").value,acc,ai:$("#ta").classList.contains("on")},{merge:true});alert("সেভ হয়েছে ✔ সবার অ্যাপে বদলে যাবে")}catch(e){alert("সেভ হয়নি: "+e.code)}};
+ const un=onSnapshot(collection(db,"users"),s=>{
+  if(!pg.isConnected){un();return}
+  const U=s.docs.map(d=>({id:d.id,...d.data()})),now=Date.now(),on=U.filter(u=>now-u.lastSeen<120000&&!u.banned).length;
+  $("#st").innerHTML=`<div class="gl stat"><small>মোট সদস্য</small><b>${bn(U.length)}</b></div><div class="gl stat"><small>এখন অনলাইন</small><b style="color:var(--ok)">${bn(on)}</b></div><div class="gl stat"><small>ভেরিফাইড</small><b>${bn(U.filter(u=>u.verified).length)}</b></div><div class="gl stat"><small>ব্যান</small><b style="color:#ff5470">${bn(U.filter(u=>u.banned).length)}</b></div>`;
+  $("#ml").innerHTML=U.map((u,i)=>`<div class="gl card row ${u.banned?"ban":""}">${av(u.name||"?",i,40,u.photoURL,now-u.lastSeen<120000)}<div style="flex:1;min-width:0"><b>${esc(u.name||"")} ${u.verified?"✔":""}</b><small>${esc(u.email||"")}</small></div>${u.email==ADMIN?"<small>আপনি</small>":`<button class="bn s o" data-v="${u.id}">${u.verified?"আনভেরিফাই":"ভেরিফাই"}</button><button class="ib" data-b="${u.id}" style="width:34px;height:34px">${ic("ban",16)}</button><button class="ib" data-d="${u.id}" style="width:34px;height:34px">${ic("trash",16)}</button>`}</div>`).join("");
+  const g=id=>U.find(x=>x.id==id);
+  b.querySelectorAll("[data-v]").forEach(e=>e.onclick=()=>updateDoc(doc(db,"users",e.dataset.v),{verified:!g(e.dataset.v).verified}));
+  b.querySelectorAll("[data-b]").forEach(e=>e.onclick=()=>updateDoc(doc(db,"users",e.dataset.b),{banned:!g(e.dataset.b).banned}));
+  b.querySelectorAll("[data-d]").forEach(e=>e.onclick=()=>{if(confirm("সদস্যের ডেটা মুছবেন?"))deleteDoc(doc(db,"users",e.dataset.d))});
+ },e=>{$("#ml").textContent="অনুমতি নেই: "+e.code});
+};
+</script>
+</body>
+</html>
